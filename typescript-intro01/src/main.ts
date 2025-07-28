@@ -1,7 +1,8 @@
 import './style.css'
 // import './topics/01-basic-type'
 // import './topics/02-objet-interface'
-import './topics/03-funtions'
+// import './topics/03-funtions'
+import './topics/04-homeworcks-type'
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
