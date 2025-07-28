@@ -1,5 +1,7 @@
 import './style.css'
+// import './topics/01-basic-type'
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
-app.innerHTML = "hola mundo";
+
+app.innerHTML = 'jere Capo';
