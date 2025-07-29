@@ -1,24 +1,24 @@
-interface Product {
+export interface Product {
     description: string;
     price: number
-}
+};
 
-const phone: Product = {
-    description: 'Nokia A1',
-    price: 150.0
-}
+// const phone: Product = {
+//     description: 'Nokia A1',
+//     price: 150.0
+// };
 
-const tablet: Product = {
-    description: 'iPad Air',
-    price: 250.0
-}
+// const tablet: Product = {
+//     description: 'iPad Air',
+//     price: 250.0
+// };
 
 interface TaxCalculationOptios {
     tax: number;
     products: Product[];
-}
+};
 
-function taxCalculation ( options: TaxCalculationOptios ): [number, number] {
+ export function taxCalculation ( options: TaxCalculationOptios ): [number, number] {
 
     const {tax, products} = options
 
@@ -29,25 +29,17 @@ function taxCalculation ( options: TaxCalculationOptios ): [number, number] {
     });
 
     return [total, total * tax]
-}
+};
 
 
+// const shoppingCart = [phone, tablet];
+// const tax = 0.15;
 
+// const [total, taxTotal] = taxCalculation({
+//     products: shoppingCart,
+//     tax,
+// });
 
+// console.log('total', total);
+// console.log('tax', taxTotal);
 
-
-
-
-const shoppingCart = [phone, tablet];
-const tax = 0.15;
-
-const [total, taxTotal] = taxCalculation({
-    products: shoppingCart,
-    tax,
-});
-
-console.log('total', total);
-console.log('tax', taxTotal)
-
-
-export{}
