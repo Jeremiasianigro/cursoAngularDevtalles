@@ -3,7 +3,8 @@ import './style.css'
 // import './topics/02-objet-interface'
 // import './topics/03-funtions'
 // import './topics/04-homeworcks-type'
-import './topics/05-basic-destructuring'
+// import './topics/05-basic-destructuring'
+import './topics/06-function-destructuring'
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
