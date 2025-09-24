@@ -1,12 +1,15 @@
-import { Passanger } from './../../../../../typescript-intro01/src/topics/11-optinonal-chaining';
 import { Component } from '@angular/core';
 
 @Component({
-  template:
-  `<h1>Counter: {{counter}}</h1>
-  <button (click)="increaseBy(1)">+1</button>
+templateUrl: './counter-page.component.htm',
+styles: `
+  button {
+    padding: 5px;
+    margin: 5px 10px;
+    width: 75px;
 
-  `
+  }
+`
 })
 
 export class CounterPageComponent {
@@ -15,4 +18,12 @@ export class CounterPageComponent {
 
   increaseBy(value: number){
     this.counter += value;}
+
+  reset(){
+    this.counter = 10;
+  }
 }
+
+
+
+
