@@ -8,10 +8,11 @@
   <dd>{{ age() }}</dd>
 
   <td>Método:</td>
-  <dd>{{ getHeroDescription() }}</dd>
+  <dd>{{ heroDescription() }}</dd>
 
   <td>Capitalizado:</td>
- <dd>{{ name().toUpperCase() }}</dd>
+ <!-- <dd>{{ capitalizeName() }}</dd> -->
+  <dd>{{ name() | uppercase }}</dd>
   <!-- <dd> {{ 'Mostrar nombre TODO EN MAYÚSCULAS' }} </dd> -->
 </dl>
 
