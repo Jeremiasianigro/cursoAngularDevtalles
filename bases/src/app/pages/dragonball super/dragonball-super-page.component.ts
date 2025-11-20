@@ -1,14 +1,11 @@
 import { Component, signal} from '@angular/core';
 import { CharacterListComponent } from '../../components/dragonball/character-list/character-list';
 import { CharacterAddComponent } from '../../components/dragonball/character-add/character-add';
+import { Character } from '../../interfaces/character.interface';
 
 
 
-interface Character {
-  id: number;
-  name: string;
-  power: number;
-}
+
 
 @Component({
   templateUrl: './dragonball-super-page.component.html',
@@ -20,23 +17,23 @@ export class dragonballSuperPageComponent  {
 
   name= signal('');
   power= signal(0);
-
   characters = signal<Character[]>([
-    { id: 1, name: 'Goku', power: 9001 },
-    { id: 2, name: 'Vegeta', power: 8000 },
+    {
+      id: 1,
+      name: 'Goku',
+      power: 15000
+    },
+    {
+      id: 2,
+      name: 'Vegeta',
+      power: 13000
+    }
+
   ]);
 
-  addCharacter() {
-    if (!this.name() || !this.power() || this.power() <= 0) return;
+  addCharacter(Character: Character) {
+    this.characters.update(characters => [...characters, Character]);
 
-    const newCharacter: Character = {
-      id: this.characters().length + 1,
-      name: this.name(),
-      power: this.power()
-    };
-    // this.characters().push(newCharacter);
-    this.characters.update(characters => [...characters, newCharacter]);
-    this.resetFields();
 
   }
 
