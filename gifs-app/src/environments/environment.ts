@@ -6,6 +6,8 @@ export const environment = {
   companySlogan: 'The best GIFs in the universe',
 
   //apiKey:
+  giphyApiKey: 'UowaILcvWfqwC2xSdF4zwjzdJP8zuJch',
+
   //URL
 
 };
