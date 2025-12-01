@@ -21,11 +21,10 @@ export default class TrendingPage {
     const scrollHeight = scrollDiv.scrollHeight;
     // console.log({scrollTop, clientHeight, scrollHeight})
 
-    const isABottom = scrollTop + clientHeight + 300 >= scrollHeight
+    const isABottom = scrollTop + clientHeight + 400 >= scrollHeight
 
     if (isABottom){
-      //TODO: cargar la siguiente pagina de gifs
-
+      this.gifService.loadTrendingGifs();
     }
 
   }
