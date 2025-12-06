@@ -2,7 +2,9 @@
 placeholder="Busqueda por capital"
 (value)="onSearch($event)"
 />
-<country-list/>
+<country-list
+[countries] = "countries()"
+/>
 
 
 
