@@ -6,12 +6,12 @@
   [placeholder]="placeholder()"
   autofocus
   #txtSearch
-  (keyup.enter)="onSearch(txtSearch.value)"
+  (keyup.enter)="value.emit(txtSearch.value)"
   />
 
   <button
   class="btn btn-primary"
-  (click)="onSearch(txtSearch.value)">
+  (click)="value.emit(txtSearch.value)">
     Buscar
   </button>
 

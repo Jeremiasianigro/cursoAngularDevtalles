@@ -11,6 +11,6 @@ export class SearchInput {
   }
 
   placeholder = input('Buscar');
-  value = output<string>;
+  value = output<string>();
 
  }
