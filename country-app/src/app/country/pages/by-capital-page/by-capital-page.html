@@ -2,9 +2,15 @@
 placeholder="Busqueda por capital"
 (value)="onSearch($event)"
 />
-<country-list
-[countries] = "countries()"
-/>
+
+@if (isError()) {
+  <h3>{{isError()}}</h3>
+}@else {
+  <country-list
+  [countries] = "countries()"
+  />
+}
+
 
 
 
