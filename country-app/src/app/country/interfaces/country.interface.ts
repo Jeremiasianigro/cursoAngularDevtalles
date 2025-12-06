@@ -1,9 +1,9 @@
 export interface Country{
 
   cca2: string;
-  coatOfArmsSvg: string | undefined;
+  coatOfArmsSvg: string;
   flagSvg: string;
-  iconAlt: string | undefined;
+  iconAlt: string;
   name: string;
   capital: string;
   population: number;

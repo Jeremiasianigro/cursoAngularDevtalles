@@ -10,10 +10,10 @@ export class CountryMapper{
     return {
       capital: restCountry.capital.join(','),
       cca2: restCountry.cca2,
-      coatOfArmsSvg: restCountry.coatOfArms.svg,
+      coatOfArmsSvg: restCountry.coatOfArms.svg ?? '',
       flagSvg: restCountry.flags.svg,
-      iconAlt: restCountry.flags.alt,
-      name: restCountry.name.common,
+      iconAlt: restCountry.flags.alt ?? '',
+      name: restCountry.translations['spa'].common,
       population: restCountry.population,
     }
 
