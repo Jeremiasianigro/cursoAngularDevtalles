@@ -22,11 +22,23 @@ export class CountryService {
         console.log('Error fetching', error)
 
         return throwError(
-          () => new Error(`No se encontró un país con esa capital: ${query}`)
-        )
+          () => new Error(`No se encontró un país con esa capital: ${query}`))
       })
+    )
+  }
 
+  searchByCountry(query: string){
+    const url = `${ API_URL }/name/${ query }`;
+   query = query.toLowerCase();
 
+    return this.http.get<RESTCountry[]>(url)
+      .pipe(map(resp => CountryMapper.mapRestCountryArrayToCountryArray(resp)),
+      catchError((error) => {
+        console.log('Error fetching', error)
+
+        return throwError(
+          () => new Error(`No se encontró un país con esa capital: ${query}`))
+      })
     )
   }
 

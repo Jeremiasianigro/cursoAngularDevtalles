@@ -1,10 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, inject, resource, ResourceLoaderParams, signal } from '@angular/core';
 import { SearchInput } from "../../components/search-input/search-input";
 import { CountryList } from "../../components/country-list/country-list";
+import { firstValueFrom } from 'rxjs';
+import { Country } from '../../interfaces/country.interface';
+import { CountryService } from '../../services/countryService';
 
 @Component({
   selector: 'app-by-coutry-page',
   imports: [SearchInput, CountryList],
   templateUrl: './by-coutry-page.html',
 })
-export class ByCoutryPage { }
+export class ByCoutryPage {
+
+    countryService = inject(CountryService);
+  query = signal('');
+
+  countryResource = resource<Country[], { query: string }>({
+    // En Angular 20 es `params`, no `request`
+    params: () => ({ query: this.query() }),
+
+    // El parámetro del loader es ResourceLoaderParams<{ query: string }>
+    loader: async ({ params }: ResourceLoaderParams<{ query: string }>) => {
+      if (!params.query) return [];
+
+      return await firstValueFrom(this.countryService.searchByCountry(params.query));
+    },
+  });
+
+
+ }
