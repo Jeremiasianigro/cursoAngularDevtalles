@@ -1,8 +1,11 @@
-import { Component, inject, signal } from '@angular/core';
+
+import { Component, inject, resource, signal, type ResourceLoaderParams } from '@angular/core';
 import { SearchInput } from '../../components/search-input/search-input';
-import { CountryList } from "../../components/country-list/country-list";
 import { CountryService } from '../../services/countryService';
 import { Country } from '../../interfaces/country.interface';
+import { firstValueFrom } from 'rxjs';
+import { CountryList } from "../../components/country-list/country-list";
+
 @Component({
   selector: 'app-by-capital-page',
   imports: [SearchInput, CountryList],
@@ -10,29 +13,18 @@ import { Country } from '../../interfaces/country.interface';
 })
 export class ByCapitalPage {
   countryService = inject(CountryService);
+  query = signal('');
 
-  isLoading = signal(false);
-  isError = signal<string | null>(null);
-  countries = signal<Country[]>([]);
+  countryResource = resource<Country[], { query: string }>({
+    // En Angular 20 es `params`, no `request`
+    params: () => ({ query: this.query() }),
 
-    onSearch(query: string){
-      if(this.isLoading()) return;
+    // El parámetro del loader es ResourceLoaderParams<{ query: string }>
+    loader: async ({ params }: ResourceLoaderParams<{ query: string }>) => {
+      if (!params.query) return [];
 
-      this.isLoading.set(true);
-      this.isError.set(null);
-
-      this.countryService.searchByCapital(query).subscribe({
-        next: (countries) =>{
-          this.isLoading.set(false);
-          this.countries.set(countries);
-        },
-        error: (err) => {
-          this.isLoading.set(false);
-          this.countries.set([]);
-          this.isError.set(err)
-        }
-      })
-    }
-
-
+      return await firstValueFrom(this.countryService.searchByCapital(params.query));
+    },
+  });
 }
+
