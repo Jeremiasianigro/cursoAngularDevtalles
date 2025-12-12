@@ -15,6 +15,8 @@ export class CountryMapper{
       iconAlt: restCountry.flags.alt ?? '',
       name: restCountry.translations['spa'].common,
       population: restCountry.population,
+      region: restCountry.region,
+      subRegion: restCountry.subregion,
     }
 
   }
