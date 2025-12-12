@@ -1,8 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, inject, resource, ResourceLoaderParams } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CountryService } from '../../services/countryService';
+import { Country } from '../../interfaces/country.interface';
+
 
 @Component({
   selector: 'app-country-page',
   imports: [],
   templateUrl: './country-page.html',
 })
-export class CountryPage {}
+export class CountryPage {
+  countryCode = inject(ActivatedRoute).snapshot.params['code'];
+  countryService = inject(CountryService);
+
+
+countryResource = resource<Country | undefined, { code: string }>({
+    // En Angular 20 es `params`, no `request`
+    params: () => ({ code: this.countryCode }),
+    loader: async ({ params }: ResourceLoaderParams<{ code: string }>) => {
+      return await this.countryService.searchByAlphaCode(params.code).toPromise();
+    },
+  });
+
+
+
+}
