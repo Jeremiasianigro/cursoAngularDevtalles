@@ -1,10 +1,11 @@
 
-import { Component, inject, resource, signal, type ResourceLoaderParams } from '@angular/core';
+import { Component, inject, linkedSignal, resource, signal, type ResourceLoaderParams } from '@angular/core';
 import { SearchInput } from '../../components/search-input/search-input';
 import { CountryService } from '../../services/countryService';
 import { Country } from '../../interfaces/country.interface';
 import { firstValueFrom } from 'rxjs';
 import { CountryList } from "../../components/country-list/country-list";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-by-capital-page',
@@ -13,7 +14,11 @@ import { CountryList } from "../../components/country-list/country-list";
 })
 export class ByCapitalPage {
   countryService = inject(CountryService);
-  query = signal('');
+
+
+  activatedRoute = inject(ActivatedRoute);
+  queryParam = this.activatedRoute.snapshot.queryParamMap.get('query') ?? '';
+  query = linkedSignal(() => this.queryParam);
 
   countryResource = resource<Country[], { query: string }>({
     // En Angular 20 es `params`, no `request`
@@ -21,6 +26,8 @@ export class ByCapitalPage {
 
     // El parámetro del loader es ResourceLoaderParams<{ query: string }>
     loader: async ({ params }: ResourceLoaderParams<{ query: string }>) => {
+
+      console.log({query: params});
       if (!params.query) return [];
 
       return await firstValueFrom(this.countryService.searchByCapital(params.query));
