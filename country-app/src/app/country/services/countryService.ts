@@ -13,6 +13,7 @@ const API_URL = 'https://restcountries.com/v3.1';
 export class CountryService {
   private http = inject(HttpClient)
   private queryCacheCapital = new Map<string, Observable<Country[]>>();
+  private queryCacheCountry = new Map<string, Observable<Country[]>>();
 
 
 
@@ -27,7 +28,7 @@ export class CountryService {
       .pipe(
 
       map(resp => CountryMapper.mapRestCountryArrayToCountryArray(resp)),
-      tap(countries => this.queryCacheCapital.set(query, of(countries).pipe(delay(0)))),
+      tap(countries => this.queryCacheCapital.set(query, of(countries))),
 
       catchError((error) => {
         console.log('Error fetching', error)
@@ -40,10 +41,15 @@ export class CountryService {
 
   searchByCountry(query: string){
     const url = `${ API_URL }/name/${ query }`;
-   query = query.toLowerCase();
+    query = query.toLowerCase();
 
-    return this.http.get<RESTCountry[]>(url)
-      .pipe(map(resp => CountryMapper.mapRestCountryArrayToCountryArray(resp)),
+      if (this.queryCacheCountry.has(query)) {
+      return this.queryCacheCountry.get(query)!;
+    }
+    return this.http.get<RESTCountry[]>(url).pipe(
+
+      map(resp => CountryMapper.mapRestCountryArrayToCountryArray(resp)),
+      tap(countries => this.queryCacheCountry.set(query, of(countries))),
       catchError((error) => {
         console.log('Error fetching', error)
 
