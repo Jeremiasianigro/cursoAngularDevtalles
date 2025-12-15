@@ -61,9 +61,20 @@
         <strong class="text-primary">{{item.key |titlecase}}: </strong>
         <span>{{item.value}}</span>
       </li>
-
     }
   </ul>
+  </app-card>
+
+  <app-card title="AsyncPipe">
+    <p>{{promiseValue | async}}</p>
+    @if (promiseValue | async; as value) {
+
+    }
+    <!--  -->
+    @else {
+      <p class="text-accent">Espere por favor ...</p>
+    }
+
   </app-card>
 
 
