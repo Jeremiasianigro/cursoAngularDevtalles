@@ -68,11 +68,21 @@
   <app-card title="AsyncPipe">
     <p>{{promiseValue | async}}</p>
     @if (promiseValue | async; as value) {
+      <p class="text-primary">{{value}}</p>
 
     }
     <!--  -->
     @else {
       <p class="text-accent">Espere por favor ...</p>
+    }
+
+    <!--  -->
+
+    <h3 class="text-xl">Observable</h3>
+    <p>{{myObservableTimer | async}}</p>
+    @if (myObservableTimer | async; as value) {
+      <p>Valor: {{value}}</p>
+
     }
 
   </app-card>
