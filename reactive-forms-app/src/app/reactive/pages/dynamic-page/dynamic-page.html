@@ -10,9 +10,12 @@
             <input class="form-control"
                    placeholder="Nombre de la persona"
                    formControlName="name">
-            <span class="form-text text-danger">
-                   error message
-            </span>
+
+            @if (formUtils.isValidField(myForm, 'name')) {
+
+               <span class="form-text text-danger">{{ formUtils.getFiledError(myForm, 'name') }}</span>
+            }
+
         </div>
     </div>
 
@@ -53,9 +56,12 @@
                           Eliminar
                       </button>
                     </div>
-                    <span class="form-text text-danger">
-                                Este campo es requerido
-                    </span>
+
+                    @if (formUtils.isValidFieldInArray(favoriteGames, i)) {
+
+                            <span class="form-text text-danger">{{ formUtils.getFiledErrorInArray(favoriteGames,i) }}</span>
+                    }
+
 
               </div>
           }
@@ -91,5 +97,5 @@
 <br>
 
 <span>Agregar Juego</span>
-<!-- <pre>{{ 'object' | json }}</pre> -->
-<!-- <pre>{{ 'object' | json }}</pre> -->
+<!-- <pre>{{ 'object' | json }}</pre>
+<pre>{{ 'object' | json }}</pre> -->
