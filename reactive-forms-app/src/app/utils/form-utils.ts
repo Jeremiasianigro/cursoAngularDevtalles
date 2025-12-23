@@ -23,6 +23,9 @@ export class FormUtils{
 
         case 'min':
           return `Valor minimo de ${ errors['min'].min}`
+
+        case 'email':
+          return 'El valor ingresado no es un correo electrónico'
         }
       }
       return null
