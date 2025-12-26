@@ -14,7 +14,7 @@ export class CountryService {
   private _region = [
     'Americas',
     'Asia',
-    'Europa',
+    'Europe',
     'Oceania',
     'Africa'
   ]
