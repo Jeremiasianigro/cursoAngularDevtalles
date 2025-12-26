@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { afterEveryRender, afterNextRender, Component, effect, OnChanges, OnInit, signal } from '@angular/core';
 
 
 const log = (... messages: string[]) =>{
@@ -12,12 +12,39 @@ const log = (... messages: string[]) =>{
   imports: [],
   templateUrl: './home-page.html',
 })
-export class HomePage {
+export class HomePage implements OnInit, OnChanges {
+
+  traditionalProperty = 'Jeremias';
+  signalProperty = signal('Jeremias');
+
+  changeTraditional(){
+    this.traditionalProperty = 'Jeremias Ianigro'
+  }
+    changeSignal(){
+    this.signalProperty.set('Jeremias Ianigro')
+  }
+
 
   constructor(){
 
     log('constructor','Constructor llamado')
+
+      setTimeout(()=>{
+        this.signalProperty.set('juan carlos')
+        console.log('hecho')
+    }, 2000)
+
   }
+
+
+
+  basicEffect = effect((onCleanup)=>{
+    log('effect',"Disparar efectos secundarios")
+
+    onCleanup(()=>{
+      log('onCleanup',"Se ejecuta cuando el efecto se va a destruir")
+    })
+  })
 
   ngOnInit(){
     log('ngOnInit',"Runs once after Angular has initialized all the component's inputs.")
@@ -40,6 +67,15 @@ export class HomePage {
   ngAfterViewChecked(){
     log('ngAfterViewChecked',"Runs every time the component's view has been checked for changes.")
   }
+  ngOnDestroy(){
+    log('ngOnDestroy',"Runs once before the component is destroyed.")
+  }
+  afterNextRenderEffect = afterNextRender(()=>{
+    log('afterNextRender',"Runs once the next time that all components have been rendered to the DOM.")
+  })
+    afterEveryRenderEffect = afterEveryRender(()=>{
+    log('afterEveryRender',"Runs every time all components have been rendered to the DOM.")
+  })
 
 
 
