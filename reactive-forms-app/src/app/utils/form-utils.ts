@@ -43,6 +43,9 @@ export class FormUtils{
         case 'emailTaken':
           return 'El correo electronico esta siendo usado por otro usuario'
 
+        case 'notStrider':
+          return 'No se puede usar ese username, ya esta siendo usado por otro usuario'
+
         case 'pattern':
           if(errors['pattern'].requiredPattern === FormUtils.emailPattern){
             return 'El valor ingresado no luce como un correo electronico'
@@ -89,18 +92,23 @@ export class FormUtils{
 }
 
 static async checkingServerResponse(
-  control: AbstractControl
-): Promise<ValidationErrors | null>{
+    control: AbstractControl
+  ): Promise<ValidationErrors | null>{
 
-  await sleep();
+    await sleep();
 
-  const formValue = control.value;
+    const formValue = control.value;
 
-  if(formValue === 'hola@mundo.com'){
-    return {emailTaken:true,}
-  };
+    if(formValue === 'hola@mundo.com'){
+      return {emailTaken:true,}
+    };
 
-  return null;
+    return null;
+    }
+
+static notStrider(control: AbstractControl): ValidationErrors | null {
+  const value = control.value;
+  return value === 'strider' ? {notStrider: true} : null;
 }
 
 

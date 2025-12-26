@@ -13,12 +13,13 @@ export class RegisterPage {
   formUtils = FormUtils;
 
   myForm: FormGroup = this.fb.group({
-      name: ['', [Validators.required, Validators.pattern(this.formUtils.namePattern)]],
+      name: ['', [Validators.required, Validators.pattern(FormUtils.namePattern)]],
       email: ['',
-                [Validators.required, Validators.pattern(this.formUtils.emailPattern)],
+                [Validators.required, Validators.pattern(FormUtils.emailPattern)],
                 [FormUtils.checkingServerResponse]
             ],
-      username: ['', [Validators.required, Validators.minLength(6),Validators.pattern(this.formUtils.notOnlySpacesPattern)]],
+      username: ['',
+        [Validators.required, Validators.minLength(6),Validators.pattern(FormUtils.notOnlySpacesPattern), FormUtils.notStrider]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       password2: ['', Validators.required],
   },
