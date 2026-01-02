@@ -38,4 +38,5 @@ export class ProductsService {
     return this.http.get<Product>(`${baseUrl}/products/${idSlug}`)
   }
 
+
 }
