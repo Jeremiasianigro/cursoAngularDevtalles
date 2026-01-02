@@ -5,7 +5,10 @@
       [alt]="product().title" />
   </figure>
   <div class="card-body">
-    <h2 class="card-title font-montserrat text-accent text-lg">{{ product().title }}</h2>
+    <a
+
+    [routerLink]="['/product',product().slug]"
+    class="card-title font-montserrat text-lg link link-accent">{{ product().title }}</a>
     <p>{{product().description | slice : 0:70}} ...</p>
     <div class="card-actions justify-end">
       <a
