@@ -2,9 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 
 import { User } from '@auth/interfaces/user.interface';
+import { environment } from 'src/environments/environment';
+import { AuthResponse } from '@auth/interfaces/auth-response.interface';
+import { tap } from 'rxjs';
 
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
-
+const baseUrl = environment.baseUrl;
 @Injectable({providedIn: 'root'})
 export class AuthService {
   private _authStatus = signal<AuthStatus>('checking');
@@ -12,6 +15,8 @@ export class AuthService {
   private _token = signal<string | null>(null);
 
   private http = inject(HttpClient)
+
+
 
 
   authStatus = computed<AuthStatus>(()=> {
@@ -25,6 +30,23 @@ export class AuthService {
   })
 
   user = computed(()=> this._user());
-  token = computed(()=> this._token());
+  token = computed(this._token);
+
+
+  loging(email: string, password: string){
+    return this.http.post<AuthResponse>(`${baseUrl}/auth/login`,{
+      email: email,
+      password: password,
+    }).pipe(
+      tap( resp => {
+        this._user.set(resp.user);
+        this._authStatus.set('authenticated');
+        this._token.set(resp.token);
+
+        localStorage.setItem('token', resp.token);
+      })
+    )
+  }
+
 
 }
