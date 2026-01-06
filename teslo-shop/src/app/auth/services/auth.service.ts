@@ -47,6 +47,18 @@ export class AuthService {
       catchError((error: any)=> this.handleAuthError(error))
     )
   }
+  register(email:string, password:string, fullName:string): Observable<boolean>{
+
+    return this.http.post<AuthResponse>(`${baseUrl}/auth/register`,{
+      email: email,
+      password: password,
+      fullName: fullName,
+    }).pipe(
+      map((resp)=> this.handleAuthSuccess(resp)),
+      catchError((error: any) => this.handleAuthError(error))
+      )
+
+  }
 
   checkStatus():Observable<boolean>{
     const token = localStorage.getItem('token');
@@ -71,7 +83,7 @@ export class AuthService {
     this._authStatus.set('not-authenticated');
     this._token.set(null);
 
-    // localStorage.removeItem('token');
+    localStorage.removeItem('token');
   };
 
   private handleAuthSuccess({token, user}: AuthResponse){
