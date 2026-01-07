@@ -1,8 +1,14 @@
 import { Component } from '@angular/core';
+import { ProductTable } from "@products/components/product-table/product-table";
+import { ProductImagePipe } from '@products/pipes/product-image.pipe';
 
 @Component({
   selector: 'app-products-admin-page',
-  imports: [],
+  imports: [ProductTable],
   templateUrl: './products-admin-page.html',
 })
-export class ProductsAdminPage { }
+export class ProductsAdminPage {
+
+
+
+ }
