@@ -23,14 +23,14 @@ export class ProductDetails implements OnInit {
     ],
     price: ['',[Validators.required, Validators.minLength(0)]],
     stock: ['',[Validators.required, Validators.minLength(0)]],
-    size: [['']],
+    sizes: [['']],
     images: [[]],
     tags: [''],
     gender: ['',
       [Validators.required, Validators.pattern(/men|woman|kid|unisex/)]],
   });
 
-  sizes = ['SX','S','M','L','XL','LXX',]
+  sizes = ['XS','S','M','L','XL','XXL',]
 
   ngOnInit(): void {
     this.setFormValue(this.product())
@@ -39,6 +39,19 @@ export class ProductDetails implements OnInit {
   setFormValue(formLike: Partial<Product>){
     this.productForm.reset(this.product() as any)
     this.productForm.patchValue({tags: formLike.tags?.join(',')})
+  }
+
+  onSizeClicked(size: string){
+    const currentSizes = this.productForm.value.sizes ?? [];
+
+    if(currentSizes.includes(size)){
+      currentSizes.slice(currentSizes.indexOf(size),1);
+    }else{
+      currentSizes.push(size)
+    }
+
+    this.productForm.patchValue({sizes: currentSizes})
+
   }
 
   onSubmit(){
