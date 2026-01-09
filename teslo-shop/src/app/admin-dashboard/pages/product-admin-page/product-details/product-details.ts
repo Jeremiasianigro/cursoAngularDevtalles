@@ -6,6 +6,7 @@ import { ProductCarousel } from "@products/components/product-carousel/product-c
 import { FormUtils } from '@utils/form-utils';
 import { FormErrorLabel } from '@shared/components/form-error-label/form-error-label';
 import { ProductsService } from '@products/services/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'product-details',
@@ -15,6 +16,7 @@ import { ProductsService } from '@products/services/product.service';
 export class ProductDetails implements OnInit {
   product = input.required<Product>();
   productsService = inject(ProductsService);
+  router = inject(Router);
 
   fb = inject(FormBuilder);
 
@@ -72,11 +74,22 @@ export class ProductDetails implements OnInit {
         .map((tag) => tag.trim() ?? []),
     };
 
-    this.productsService
-    .updateProduct(this.product().id, productLike)
-    .subscribe((producto) =>{
-      console.log('Producto actualizado')
-    })
+
+    if(this.product().id === 'new'){
+      this.productsService.createProduct(productLike).subscribe(product =>{
+        console.log('Producto Creado')
+        this.router.navigate(['/admin/products', product.id])
+      })
+
+    }else{
+      this.productsService
+      .updateProduct(this.product().id, productLike)
+      .subscribe((producto) =>{
+        console.log('Producto actualizado')
+      })
+    }
+
+
   }
 
 
