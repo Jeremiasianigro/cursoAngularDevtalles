@@ -133,3 +133,10 @@ class="grid grid-cols-1 sm:grid-cols-2 gap-4">
     <input type="file" class="file-input file-input-bordered w-full mt-4" />
   </div>
 </form>
+@if (wasSabe()) {
+<div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fade-in-scale">
+  <span>
+    Datos Actualizados correctamente
+  </span>
+</div>
+}

@@ -1,12 +1,14 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { Product } from '@products/interfaces/product.interface';
 import { ProductCarousel } from "@products/components/product-carousel/product-carousel";
 import { FormUtils } from '@utils/form-utils';
 import { FormErrorLabel } from '@shared/components/form-error-label/form-error-label';
 import { ProductsService } from '@products/services/product.service';
-import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+
 
 @Component({
   selector: 'product-details',
@@ -19,6 +21,7 @@ export class ProductDetails implements OnInit {
   router = inject(Router);
 
   fb = inject(FormBuilder);
+  wasSabe = signal(false);
 
   productForm = this.fb.group({
     title: ['', Validators.required],
@@ -59,7 +62,7 @@ export class ProductDetails implements OnInit {
 
   }
 
-  onSubmit(){
+  async onSubmit(){
     const isValid = this.productForm.valid
     if(!isValid) return;
 
@@ -76,18 +79,20 @@ export class ProductDetails implements OnInit {
 
 
     if(this.product().id === 'new'){
-      this.productsService.createProduct(productLike).subscribe(product =>{
-        console.log('Producto Creado')
-        this.router.navigate(['/admin/products', product.id])
-      })
+      const product = await firstValueFrom(
+        this.productsService.createProduct(productLike)
+      );
 
     }else{
-      this.productsService
-      .updateProduct(this.product().id, productLike)
-      .subscribe((producto) =>{
-        console.log('Producto actualizado')
-      })
+      await firstValueFrom(
+        this.productsService.updateProduct(this.product().id, productLike)
+      )
     }
+
+    this.wasSabe.set(true);
+    setTimeout(()=>{
+      this.wasSabe.set(false);
+    }, 3000);
 
 
   }
