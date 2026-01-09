@@ -69,8 +69,10 @@ export class ProductsService {
       tap((product) => this.productCache.set(id, product)))
   }
 
-  updateProduct(productLike: Partial<Product>){
-    console.log('Actualizando producto')
+  updateProduct(id: string, productLike: Partial<Product>): Observable<Product>{
+
+    return this.http.patch<Product>(`${baseUrl}/products/${id}`, productLike);
+
   }
 
 
